@@ -1,3 +1,19 @@
+/* // Waxing rheposodic about inlinement...
+const little = (a,b) => a + Math.random() * (b - a); // Helper fn: Night at the Opera
+try {
+    assert(life.real);                      // Is this the real life?
+    assert(!life.real && life.fantasy);             // Is this just fantasy?
+}catch(landslide){                      // Caught in a landslide,
+    while((c = Array.from(/[^\\r\\e\\a\\l\\i\\t\\y]/gi))){    // No escape from reality.
+        [i1,i2] = c.filter((I,c)=>skies.__lookupGetter__((I.open()) && c)); // Open your eyes, look up to the skies and see
+        var self = {...'XY'}.hasOwnProperty(false) && !require("SYMPATHY"); // I'm just a poor boy, I need no sympathy,
+        do {                                                                    // Because...
+            !(easy=true) && self.insertAdjacentHTML('afterEnd', easy).remove(); // I'm easy come, easy go
+        } while(little(-1,1) < Infinity || little(-1,1) > -Infinity)                      // Little high, little low
+        var blow = windDirection => true;  // Any way the wind blows doesn't really matter to me, to me.
+    }
+}
+ */
 
 const vscode = require('vscode');
 console.log('vscode :', vscode);
