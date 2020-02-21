@@ -32,6 +32,8 @@ VSC Extension to align inline comments by their leading "//"
 
     _Damn right I'll fix it if its broke._
 
+## Usage
+   
 
 ### Requirements
 

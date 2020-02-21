@@ -18,12 +18,12 @@ try {
 const vscode = require('vscode');
 console.log('vscode :', vscode);
 function activate(context) {
+	
 	console.log ("EXTENSION - Inlinement (Aligns inline comments to the right of your code) - is now activ\e.")
-	let inlinement = vscode.commands.registerCommand('extension.inlinement', function () {
+	let inlinement = vscode.commands.registerCommand('inlinement', function () {
 		console.log(this, vscode)
 		var  arrayOfSelected = []						// Array that will hold the lines selected within the editor
 			,lineByLineParse = []						// Constructed array that will hold all the lines in arrayOfSelected, post-parse
-			,finalOutput	 = []
 			,commentSlashPos = 0						// Numeric value that will hold the max charPos of the //'s within the block
 			,backfillSpacing = '';						// String value that will hold the 
 
@@ -32,13 +32,17 @@ function activate(context) {
 		
 		// 1. Obtain the selected region of test of the current window.
 		let selection = vscode.window.activeTextEditor.selection;
-		console.log('selection :', selection);
+		console.log('selection :', selection, vscode.window.activeTextEditor.selections);
+		
 		
 		// 1b. Break that out into start/end points.
 		let startLine = selection.start.line;																				// Gather first line in selection block...
 		let endLine = selection.end.line;																					//	... followed by the last.
 		let endLineLength = activeDocument.lineAt(endLine).text.length
 		let replaceRange = new vscode.Range(startLine, 0, endLine, endLineLength);
+  		console.log('replaceRange :', replaceRange);
+
+		
 
 		// 2. Iterate those lines, and gather the data
 		for(let i = startLine; i <= endLine; i++) arrayOfSelected.push(activeDocument.lineAt(i).text)						// Construct an array containing all the selected lines from the editor
