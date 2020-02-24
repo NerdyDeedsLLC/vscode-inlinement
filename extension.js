@@ -38,9 +38,13 @@ function activate(context) {
 
         const repositionInlineComments = (strInput, ...params) => {                         // The magic wot makes the pixies dance.
             if(/\t/gim.test(strInput)) strInput = strInput.replace(/\t/gim, '    ');        // Normalize tabs to spaces. TODO: Convert it back to tabs if it started that way. I guess. If someone complains.
-            const inlineDelimiter = params.inlineDelimiter || "\\/{2}",                     // The inline-comment charater(s) that we'll be aligning by (regex)
+            const reCodex = {};
+            reCodex['//'] = '^([\\S\\t\\l\\v ]*?\\S{1})(?:[\\t\\l\\v ]*)\\/{2}([^\\/{2}\\n\\r]+){1}$'
+            reCodex['#']  = '^([\\S\\t\\l\\v ]*?\\S{1})(?:[\\t\\l\\v ]*)(?<!href=.?.?)#( ?\w*\b|[^#\n\r]+)$'
+            const inlineDelimiter = params.inlineDelimiter || "//",                     // The inline-comment charater(s) that we'll be aligning by (regex)
                   minColumnOffset = params.minColumnOffset || 20,                           // Any additional padding to tack on
-                  commentRE       = new RegExp('^([\\S\\t\\l\\v ]*?\\S{1})(?:[\\t\\l\\v ]*)' + inlineDelimiter + '([^/\\n\\r]+){1}$', 'gim'), // Construct the regex we'll need to perform the operation.
+                  commentRE       = new RegExp(reCodex[inlineDelimiter], 'gim'), // Construct the regex we'll need to perform the operation.
+                                                //
                   maxColPos       = Math.max(...[...strInput.matchAll(commentRE)].map(v=>v[1].length)); // Find the longest pre-delimeter line
             return strInput.replace(commentRE, (_x_, p1, p2)=>rtrim(p1) + (paddingSpaces).slice(0, (minColumnOffset + maxColPos-rtrim(p1).length)) + ' // '+ ltrim(p2)); // Add sufficient padding spaces to align each line.
         }
