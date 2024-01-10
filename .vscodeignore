@@ -1,8 +1,0 @@
-**/*.map
-**/.eslintrc.json
-**/jsconfig.json
-.gitignore
-.vscode-test/**
-.vscode/**
-test/**
-vsc-extension-quickstart.md

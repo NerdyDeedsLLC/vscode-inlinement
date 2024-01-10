@@ -1,48 +1,151 @@
 {
-	"name": "inlinement",
-	"displayName": "inlinement",
-	"description": "VSC Extension to align inline comments by their leading '//'",
-	"version": "0.0.1",
-	"publisher": "NerdyDeedsLLC",
-	"icon": "icon/icon128.png",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/NerdyDeedsLLC/vscode-inlinement.git"
-	},
-	"engines": {
-		"vscode": "^1.30.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-		"onCommand:inlinement"
-	],
-	"main": "./extension.js",
-	"contributes": {
-		"commands": [
-			{
-				"command": "inlinement",
-				"title": "Inlinement: Align Comments"
-			}
-		],
-		"menus": {
-			"commandPalette": [
-				{
-					"command": "inlinement",
-					"when": "never"
-				}
-			]
-		}
-	},
-	"scripts": {
-		"test": "node ./node_modules/vscode/bin/test"
-	},
-	"devDependencies": {
-		"typescript": "^3.1.4",
-		"vscode": "^1.1.25",
-		"eslint": "^4.11.0",
-		"@types/node": "^8.10.25",
-		"@types/mocha": "^2.2.42"
-	}
+  "name": "inlinement",
+  "displayName": "Inlinement",
+  "description": "VSCode Extension to align inline comments automagically or to desired column position",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],  
+  "activationEvents": [
+    "onStartup"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [{
+      "command": "inlinement.align",
+      "title": "INLINEMENT: Align comments",
+      "category": "Inlinement",
+      "icon": {
+        "light": "./resources/light/align.svg",
+        "dark": "./resources/dark/align.svg"
+      },
+      "precondition": "editorLangId == javascript || editorLangId == typescript || editorLangId == javascriptreact || editorLangId == typescriptreact",
+      "keybindings": [{
+        "command": "inlinement.align",
+        "key": "alt+/, alt+/"
+      }]
+    },
+    {
+      "command": "inlinement.clearInlines",
+      "title": "INLINEMENT: Clears all inline comments",
+      "category": "Inlinement",
+      "icon": {
+        "light": "./resources/light/clear.svg",
+        "dark": "./resources/dark/clear.svg"
+      },
+      "precondition": "editorLangId == javascript || editorLangId == typescript || editorLangId == javascriptreact || editorLangId == typescriptreact",
+      "keybindings": [{
+        "command": "inlinement.clearInlines",
+        "key": "alt+shift+/, alt+shift+/"
+      }]
+    },
+    {
+      "command": "inlinement.toggleAutoAlignOnSave",
+      "title": "INLINEMENT: Enable auto align on save",
+      "category": "Inlinement",
+      "icon": {
+        "light": "./resources/light/save.svg",
+        "dark": "./resources/dark/save.svg"
+      },
+      "precondition": "editorLangId == javascript || editorLangId == typescript || editorLangId == javascriptreact || editorLangId == typescriptreact"
+    },
+    {
+      "command": "inlinement.toggleAutoAlignOnPaste",
+      "title": "INLINEMENT: Enable auto align on newline",
+      "category": "Inlinement",
+      "icon": {
+        "light": "./resources/light/newline.svg",
+        "dark": "./resources/dark/newline.svg"
+      },
+      "precondition": "editorLangId == javascript || editorLangId == typescript || editorLangId == javascriptreact || editorLangId == typescriptreact"
+    }],
+
+    "configuration": {
+      "title": "Inlinement",
+      "properties": {
+        "inlinement.alignTo": {
+          "markdownDescription": "How to calculate the alignment of the comments. Options include:\n- `hybrid`, aligns to the minimumColumn value specified below, or the length of the longest line in the file/selection, whichever is greater.\n- `fixed`, aligns to the minimumColumn value specified below.\n- `longest`, aligns to the length of the longest line in the file/selection.",
+          "type": "string",
+          "default": "hybrid",
+          "enum": ["hybrid", "fixed", "longest"],
+          "enumDescriptions": [
+            "Align comments to either the minimumColumn value specified below, or the length of the longest line in the file/selection, whichever is greater",
+            "Align comments to the minimumColumn value specified below",
+            "Align comments to the length of the longest line in the file/selection"
+          ]
+        },
+        "inlinement.alignWholeFile": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Aligns the entire file, rather than just the selected text, ignoring the selection entirely if one exists. __Note:__ This setting is ignored if no text is selected.\n\n(__Default:__ **false**)"
+        },
+        "inlinement.includeSingles": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Whether to include single-line comments - that is, comments in which they are the only text on that line - in the alignment process.\n\n(__Default:__ **false**)"
+        },
+        "inlinement.minimumColumn": {
+          "type": "number",
+          "default": 120,
+          "markdownDescription": "The desired column position to which all comments will be aligned. This value is ignored if `alignTo` is set to `longest`, and may be if it is set to `hybrid`.\n\n(__Default:__ **120**)"
+        },
+        "inlinement.nearestTabStop": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Whether to round the column position to the nearest tab stop based on your tab/space settings (recommended; it can be a nuisance to have to backspace or space forward when they don't).\n\n(__Default:__ **true**)"
+        },
+        "inlinement.offset": {
+          "type": "number",
+          "default": 4,
+          "markdownDescription": "The minimum number of spaces between the end of the longest line and the beginning of the inline comment character(s). This value is ignored if `alignTo` is set to `fixed`.\n\n(__Default:__ **4**)"
+        },
+        "inlinement.collisionProtection": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "**HIGHLY RECOMMENDED!** Prevents inlinement from truncating your code to ensure that the inline comments are aligned. If this is set to `false`, your code may be truncated at the specified/calculated column position.\nThere is really no good reason to disable this outside of some very specific edge cases (ASCII art, for instance)\n\n(__Default:__ **true**)"
+        },
+        "inlinement.trimSpaces": {
+          "markdownDescription": "Whether to trim whitespace from the left, right, or both sides of the comment. Options include:\n- `both`, trims whitespace from both sides of the comment.\n- `leading`, trims whitespace from the left side of the comment.\n- `trailing`, trims whitespace from the right side of the comment.\n- `none`, does not trim whitespace from the comment.",
+          "type": "string",
+          "default": "trailing",
+          "enum": ["both", "leading", "trailing", "none"],
+          "enumDescriptions": [
+            "Trim whitespace from both sides of the comment",
+            "Trim whitespace from the left side of the comment",
+            "Trim whitespace from the right side of the comment",
+            "Do not trim whitespace from the comment"
+          ]
+        },
+        "inlinement._automatic": {
+          "markdownDescription": "*Experimental:* Whether to align inline comments automatically when certain events occur within the editor",
+          "type": "string",
+          "default": "never",
+          "enum": ["never", "save", "newline", "both"],
+          "enumDescriptions": [
+            "Align comments only when the command is run",
+            "Align inline comments automatically when the file is saved",
+            "Align inline comments automatically each time a newline/carriage return is inserted",
+            "Align inline comments automatically when both the file is saved AND a newline is inserted"
+          ]
+        }
+      }
+    }
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3",
+    "@vscode/test-cli": "^0.0.4",
+    "@vscode/test-electron": "^2.3.8"
+  }
 }

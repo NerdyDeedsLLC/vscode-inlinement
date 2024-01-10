@@ -3,11 +3,13 @@
 		"browser": false,
 		"commonjs": true,
 		"es6": true,
-		"node": true
+		"node": true,
+		"mocha": true
 	},
 	"parserOptions": {
+		"ecmaVersion": 2018,
 		"ecmaFeatures": {
-			"jsx": false
+			"jsx": true
 		},
 		"sourceType": "module"
 	},
