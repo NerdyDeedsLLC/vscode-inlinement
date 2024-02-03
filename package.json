@@ -8,61 +8,66 @@
   },
   "categories": [
     "Other"
-  ],  
+  ],
   "activationEvents": [
     "onStartup"
   ],
   "main": "./extension.js",
   "contributes": {
-    "commands": [{
-      "command": "inlinement.align",
-      "title": "INLINEMENT: Align comments",
-      "category": "Inlinement",
-      "icon": {
-        "light": "./resources/light/align.svg",
-        "dark": "./resources/dark/align.svg"
-      },
-      "precondition": "editorLangId == javascript || editorLangId == typescript || editorLangId == javascriptreact || editorLangId == typescriptreact",
-      "keybindings": [{
+    "commands": [
+      {
         "command": "inlinement.align",
-        "key": "alt+/, alt+/"
-      }]
-    },
-    {
-      "command": "inlinement.clearInlines",
-      "title": "INLINEMENT: Clears all inline comments",
-      "category": "Inlinement",
-      "icon": {
-        "light": "./resources/light/clear.svg",
-        "dark": "./resources/dark/clear.svg"
+        "title": "INLINEMENT: Align comments",
+        "category": "Inlinement",
+        "icon": {
+          "light": "./resources/light/align.svg",
+          "dark": "./resources/dark/align.svg"
+        },
+        "precondition": "editorLangId == javascript || editorLangId == typescript || editorLangId == javascriptreact || editorLangId == typescriptreact",
+        "keybindings": [
+          {
+            "command": "inlinement.align",
+            "key": "alt+/, alt+/"
+          }
+        ]
       },
-      "precondition": "editorLangId == javascript || editorLangId == typescript || editorLangId == javascriptreact || editorLangId == typescriptreact",
-      "keybindings": [{
+      {
         "command": "inlinement.clearInlines",
-        "key": "alt+shift+/, alt+shift+/"
-      }]
-    },
-    {
-      "command": "inlinement.toggleAutoAlignOnSave",
-      "title": "INLINEMENT: Enable auto align on save",
-      "category": "Inlinement",
-      "icon": {
-        "light": "./resources/light/save.svg",
-        "dark": "./resources/dark/save.svg"
+        "title": "INLINEMENT: Clears all inline comments",
+        "category": "Inlinement",
+        "icon": {
+          "light": "./resources/light/clear.svg",
+          "dark": "./resources/dark/clear.svg"
+        },
+        "precondition": "editorLangId == javascript || editorLangId == typescript || editorLangId == javascriptreact || editorLangId == typescriptreact",
+        "keybindings": [
+          {
+            "command": "inlinement.clearInlines",
+            "key": "alt+shift+/, alt+shift+/"
+          }
+        ]
       },
-      "precondition": "editorLangId == javascript || editorLangId == typescript || editorLangId == javascriptreact || editorLangId == typescriptreact"
-    },
-    {
-      "command": "inlinement.toggleAutoAlignOnPaste",
-      "title": "INLINEMENT: Enable auto align on newline",
-      "category": "Inlinement",
-      "icon": {
-        "light": "./resources/light/newline.svg",
-        "dark": "./resources/dark/newline.svg"
+      {
+        "command": "inlinement.toggleAutoAlignOnSave",
+        "title": "INLINEMENT: Enable auto align on save",
+        "category": "Inlinement",
+        "icon": {
+          "light": "./resources/light/save.svg",
+          "dark": "./resources/dark/save.svg"
+        },
+        "precondition": "editorLangId == javascript || editorLangId == typescript || editorLangId == javascriptreact || editorLangId == typescriptreact"
       },
-      "precondition": "editorLangId == javascript || editorLangId == typescript || editorLangId == javascriptreact || editorLangId == typescriptreact"
-    }],
-
+      {
+        "command": "inlinement.toggleAutoAlignOnPaste",
+        "title": "INLINEMENT: Enable auto align on newline",
+        "category": "Inlinement",
+        "icon": {
+          "light": "./resources/light/newline.svg",
+          "dark": "./resources/dark/newline.svg"
+        },
+        "precondition": "editorLangId == javascript || editorLangId == typescript || editorLangId == javascriptreact || editorLangId == typescriptreact"
+      }
+    ],
     "configuration": {
       "title": "Inlinement",
       "properties": {
@@ -70,7 +75,11 @@
           "markdownDescription": "How to calculate the alignment of the comments. Options include:\n- `hybrid`, aligns to the minimumColumn value specified below, or the length of the longest line in the file/selection, whichever is greater.\n- `fixed`, aligns to the minimumColumn value specified below.\n- `longest`, aligns to the length of the longest line in the file/selection.",
           "type": "string",
           "default": "hybrid",
-          "enum": ["hybrid", "fixed", "longest"],
+          "enum": [
+            "hybrid",
+            "fixed",
+            "longest"
+          ],
           "enumDescriptions": [
             "Align comments to either the minimumColumn value specified below, or the length of the longest line in the file/selection, whichever is greater",
             "Align comments to the minimumColumn value specified below",
@@ -111,7 +120,12 @@
           "markdownDescription": "Whether to trim whitespace from the left, right, or both sides of the comment. Options include:\n- `both`, trims whitespace from both sides of the comment.\n- `leading`, trims whitespace from the left side of the comment.\n- `trailing`, trims whitespace from the right side of the comment.\n- `none`, does not trim whitespace from the comment.",
           "type": "string",
           "default": "trailing",
-          "enum": ["both", "leading", "trailing", "none"],
+          "enum": [
+            "both",
+            "leading",
+            "trailing",
+            "none"
+          ],
           "enumDescriptions": [
             "Trim whitespace from both sides of the comment",
             "Trim whitespace from the left side of the comment",
@@ -123,7 +137,12 @@
           "markdownDescription": "*Experimental:* Whether to align inline comments automatically when certain events occur within the editor",
           "type": "string",
           "default": "never",
-          "enum": ["never", "save", "newline", "both"],
+          "enum": [
+            "never",
+            "save",
+            "newline",
+            "both"
+          ],
           "enumDescriptions": [
             "Align comments only when the command is run",
             "Align inline comments automatically when the file is saved",
@@ -140,12 +159,14 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.85.0",
     "@types/mocha": "^10.0.6",
-    "@types/node": "18.x",
+    "@types/node": "^20.11.16",
+    "@types/vscode": "^1.85.0",
+    "@vscode/test-cli": "^0.0.4",
+    "@vscode/test-electron": "^2.3.8",
+    "@vscode/vsce": "^2.23.0",
     "eslint": "^8.56.0",
     "typescript": "^5.3.3",
-    "@vscode/test-cli": "^0.0.4",
-    "@vscode/test-electron": "^2.3.8"
+    "vsce": "^2.15.0"
   }
 }
