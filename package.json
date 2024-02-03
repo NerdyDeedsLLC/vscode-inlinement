@@ -12,6 +12,10 @@
   "activationEvents": [
     "onStartup"
   ],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/NerdyDeedsLLC/vscode-inlinement.git"
+	},
   "main": "./extension.js",
   "contributes": {
     "commands": [
