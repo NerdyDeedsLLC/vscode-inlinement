@@ -42,7 +42,7 @@ function activate(context) {
         //## RANGE AND SELECTION SCOPE 
         //# Ascertain the range of the selection (or the whole file if alignWholeFile is true).
         let activeTextEditor      = vscode.window.activeTextEditor                                                                           // Active instance (window) of VSCode
-            , editorDoc            = activeTextEditor.editorDoc                                                                                // Active editorDoc (tab) within VSCode
+            , editorDoc            = activeTextEditor.document                                                                                // Active editorDoc (tab) within VSCode
             , selection           = activeTextEditor.selection                                                                               // Selected block of code (range) within the active editorDoc
             , startLine           = selection.start.line                                                                                     // Topmost line in selection's line number
             , endLine             = selection.end.line                                                                                       // Bottommost line in selection's line number
