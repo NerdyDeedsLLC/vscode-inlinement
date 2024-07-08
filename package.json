@@ -2,9 +2,9 @@
   "name": "inlinement",
   "displayName": "Inlinement",
   "description": "VSCode Extension to align inline comments automagically or to desired column position",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "engines": {
-    "vscode": "^1.85.0"
+    "vscode": "^1.90.0"
   },
   "publisher": "NerdyDeedsLLC",
   "icon": "icon/inlinement.ico",
