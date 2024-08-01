@@ -32,9 +32,9 @@ function activate(context) {
         indentWithSpaces      = !!vscode.workspace.getConfiguration('editor').get('insertSpaces'),                                       // Deterimine if the IDE is set to indent with spaces or tabs.
         tabEquivalentInSpaces = paddingSpaces.slice(0, tabSize),                                                                         // If we're indenting with spaces, then we'll need to know how many spaces are in a tab.
         indentationRE         = new RegExp('^(\t|' + tabEquivalentInSpaces + ')+', 'gm'),                                                // Regex to match the indentation at the beginning of the line.
-        matchAllButCommentsRE = /^(.+?)\s*(?<!:)\/\/.+$/gim,                                                                             // Regex to match all but the trailing comment.
-        matchALLInlinesRE     = /^(.*)(?<!:)\s*\/\/(.+)$/gim,                                                                            // Regex to match a single-line comment, 
-        matchONLYTrailingsRE  = /^(.*?[\S].*?)(?<!:)\s*\/\/(.+)$/gim,                                                                    // Regex to match a single inline comment trailing a line of code.
+        matchAllButCommentsRE = /^(.+?)\s+(?<!:)\/\/.+$/gim,                                                                             // Regex to match all but the trailing comment.
+        matchALLInlinesRE     = /^(.*)(?<!:)\s+\/\/(.+)$/gim,                                                                            // Regex to match a single-line comment, 
+        matchONLYTrailingsRE  = /^(.*?[\S].*?)(?<!:)\s+\/\/(.+)$/gim,                                                                    // Regex to match a single inline comment trailing a line of code.
         applicableRE          = (config.includeSingles) ? matchALLInlinesRE : matchONLYTrailingsRE;                                      // If we're including single-line comments, then we'll match all comments. Otherwise, we'll only match trailing comments.
     }
 
