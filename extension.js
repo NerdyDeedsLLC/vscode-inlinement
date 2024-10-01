@@ -65,7 +65,7 @@ function activate(context) {
         const lnLen = (v) => (/\/\//g.test(v)) ? v.replace(matchAllButCommentsRE,'$1').length : 0;                                                                   // HelperFN: returns length of string v sans trailing whitespace or comments.
         const longestLine = (v) => Math.max(...v.split('\n').map(lnLen));                                                                    // HelperFN: returns longest line's length in the multi-line string, v.
         const roundToTabStop = (num) => (!config.nearestTabStop) ? +num : Math.ceil(+num / tabSize * tabSize);                               // HelperFN: either rounds num to the nearest tab stop or returns it as-is.
-        const ltrim = (v) => v.replace(/^[\s]*(\/\/)?[\s]+/gi, '')                                                                 // HelperFN: trims whitespace on the left side of value v
+        const ltrim = (v) => v.replace(/^[\s]+(\/\/)?[\s]+/gi, '')                                                                 // HelperFN: trims whitespace on the left side of value v
         const rtrim = (v) => v.replace(/^(.*?)[\s]+$/gi, '$1')                                                                         // HelperFN: trims whitespace on the right side of value v
         
         // HelperFN: trims whitespace from the left, right, or both sides of the line.
